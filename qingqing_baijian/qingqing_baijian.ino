@@ -115,7 +115,7 @@ void get_english()
     JsonObject& obj = doc.as<JsonObject>();
     String  content = obj["content"];
     english = content;
-    Serial.println(english);
+    //Serial.println(english);
   }
   http.end();
 }
@@ -165,11 +165,12 @@ void show()
   Serial.print("DS12(7,75,'"); Serial.print(hz[3]); Serial.print(tem1); Serial.print("c',3);"); //DS12(7,65,'最高温度:',1);
   Serial.print("DS12(7,90,'"); Serial.print(hz[4]); Serial.print(temnow); Serial.print("c',3);"); //DS12(7,85,'当前温度：',3);
   Serial.print("DS12(7,105,'"); Serial.print(hz[5]); Serial.print(tem2); Serial.print("c',3);"); //DS12(7,105,'最低温度：',13);
-  Serial.print("DS12(8,160,'"); Serial.print(time0); Serial.println("',1);"); //BS12(8,140,216,4,'日期时间',1);
-  delay(100);
-  Serial.print("BS12(8,130,210,2,'"); Serial.print("  "); Serial.print("',13);");//局部刷新--原创000
-  Serial.print("BS12(8,130,210,2,'"); Serial.print(english); Serial.print("',13);");
-  Serial.print("\r\n");
+  Serial.print("DS12(100,109,'"); Serial.print(time0); Serial.println("',1);"); //BS12(8,140,216,4,'日期时间',1);
+  delay(200);
+  Serial.print("BS12(8,130,210,2,'"); Serial.print("  "); Serial.println("',13);");//局部刷新--原创000
+  //经过我的研究发现英文中不能出现“'”这个符号，例如：that's就不行，所以将其替换为“.”
+  english.replace("'", ".");
+  Serial.print("BS12(8,130,210,1,'"); Serial.print(english); Serial.println("',13);");
   delay(300);
 }
 void loop()
